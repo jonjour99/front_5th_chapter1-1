@@ -1,11 +1,12 @@
 import { Layout } from "../Layout.js";
+import { auth } from "../utils/auth.js"; // auth 모듈 추가
 
 export const ProfilePage = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const user = auth.getUser(); // localStorage 직접 접근 대신 auth.getUser() 사용
   const { username = "", email = "", bio = "" } = user;
 
   const content = `
-        <main class="p-4">
+        <main role="main" class="p-4">
           <div class="bg-white p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
               내 프로필

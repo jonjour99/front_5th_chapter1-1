@@ -5,8 +5,12 @@ export const formHandlers = {
   login: (event) => {
     event.preventDefault();
     const username = document.getElementById("username").value;
-    auth.setUser({ username, email: "", bio: "" });
-    navigate("/");
+    const password = document.getElementById("password").value;
+    // 비밀번호 검증 후 로그인 처리
+    if (username && password) {
+      auth.setUser({ username, email: "", bio: "" });
+      navigate("/");
+    }
   },
 
   profile: (event) => {
@@ -19,6 +23,7 @@ export const formHandlers = {
       bio: document.getElementById("bio").value,
     };
     auth.setUser(updatedUser);
+    alert("프로필이 업데이트되었습니다.");
     router();
   },
 
