@@ -9,7 +9,7 @@ export const LoginPage = () => `
             type="text" 
             id="username" 
             name="username" 
-            placeholder="사용자 이름을 입력하세요" 
+            placeholder="사용자 이름" 
             class="w-full p-2 border rounded"
           >
         </div>

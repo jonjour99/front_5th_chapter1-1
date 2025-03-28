@@ -12,4 +12,4 @@ export const NotFoundPage = () => `
       </a>
     </div>
   </main>
- `;
+`;

@@ -32,8 +32,13 @@ export const hashRouter = () => {
     }
   }
 
-  // Render page
-  const PageComponent = routes[currentPath] || routes["/404"];
+  // 경로가 routes에 없는 경우 404 페이지로 처리
+  let PageComponent = routes[currentPath];
+  if (!PageComponent) {
+    PageComponent = routes["/404"];
+    // 이 부분이 중요: 404 경로일 때는 해시를 변경하지 않고 렌더링만 함
+  }
+
   const rootElement = document.getElementById("root");
   rootElement.innerHTML =
     typeof PageComponent === "function" ? PageComponent() : PageComponent;

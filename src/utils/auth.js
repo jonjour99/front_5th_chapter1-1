@@ -11,14 +11,27 @@ export const auth = {
   },
 
   setUser: (userData) => {
-    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+    try {
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
   },
 
   removeUser: () => {
-    localStorage.removeItem(USER_STORAGE_KEY);
+    try {
+      localStorage.removeItem(USER_STORAGE_KEY);
+    } catch (error) {
+      console.error("Error removing user data:", error);
+    }
   },
 
   isAuthenticated: () => {
-    return !!localStorage.getItem(USER_STORAGE_KEY);
+    try {
+      return !!localStorage.getItem(USER_STORAGE_KEY);
+    } catch (error) {
+      console.error("Error checking authentication status:", error);
+      return false;
+    }
   },
 };

@@ -1,8 +1,8 @@
 import { Layout } from "../Layout.js";
-import { auth } from "../utils/auth.js"; // auth 모듈 추가
+import { auth } from "../utils/auth.js";
 
 export const ProfilePage = () => {
-  const user = auth.getUser(); // localStorage 직접 접근 대신 auth.getUser() 사용
+  const user = auth.getUser();
   const { username = "", email = "", bio = "" } = user;
 
   const content = `

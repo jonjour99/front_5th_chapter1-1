@@ -6,8 +6,9 @@ export const formHandlers = {
     event.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    // 비밀번호 검증 후 로그인 처리
-    if (username && password) {
+
+    // 간단한 유효성 검사
+    if (username.trim() && password.trim()) {
       auth.setUser({ username, email: "", bio: "" });
       navigate("/");
     }
@@ -28,7 +29,7 @@ export const formHandlers = {
   },
 
   logout: (event) => {
-    event.preventDefault();
+    event && event.preventDefault();
     auth.removeUser();
     navigate("/login");
   },

@@ -47,7 +47,7 @@ export const router = () => {
     }
   }
 
-  // Render page
+  // routes에 없는 경로는 404 페이지로 처리
   const PageComponent = routes[currentPath] || routes["/404"];
   const rootElement = document.getElementById("root");
   rootElement.innerHTML =
