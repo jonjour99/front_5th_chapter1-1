@@ -1,5 +1,4 @@
-import "./main.js";
-import { hashRouter } from "./router/hashRouter.js";
+import { hashRouter, navigate } from "./router/hashRouter.js";
 
 // 링크 클릭 이벤트 처리
 document.addEventListener("click", (e) => {
@@ -7,8 +6,7 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     const href = e.target.getAttribute("href");
     if (href !== "#") {
-      window.location.hash = href;
-      hashRouter();
+      navigate(href);
     }
   }
 });
@@ -20,7 +18,7 @@ window.addEventListener("hashchange", hashRouter);
 window.addEventListener("DOMContentLoaded", () => {
   // 초기 해시가 없으면 기본 경로로 설정
   if (!window.location.hash) {
-    window.location.hash = "/";
+    navigate("/");
   } else {
     hashRouter();
   }

@@ -1,4 +1,4 @@
-import { router } from "./router/router.js";
+import { router, navigate } from "./router/router.js";
 
 // 링크 클릭 이벤트 처리
 document.addEventListener("click", (e) => {
@@ -6,8 +6,7 @@ document.addEventListener("click", (e) => {
     e.preventDefault();
     const href = e.target.getAttribute("href");
     if (href !== "#") {
-      window.history.pushState({}, "", href);
-      router();
+      navigate(href);
     }
   }
 });

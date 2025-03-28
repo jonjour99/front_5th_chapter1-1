@@ -10,7 +10,8 @@ export const navigate = (path) => {
 
 export const getCurrentPath = () => {
   // # 다음의 경로 추출
-  return window.location.hash.substring(1) || "/";
+  const hashPath = window.location.hash.substring(1);
+  return hashPath || "/";
 };
 
 export const hashRouter = () => {
