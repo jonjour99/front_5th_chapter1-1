@@ -1,25 +1,16 @@
 import { routes } from "../routes.js";
 import { auth } from "../utils/auth.js";
 import { bindEvents } from "../utils/eventBinding.js";
-import { handleLogout } from "../handler/formHandlers.js";
-
-// 기본 경로 설정 (window.BASE_PATH를 사용하여 HTML에서 정의한 값을 가져옴)
-const BASE_PATH = window.BASE_PATH || "/front_5th_chapter1-1";
 
 // 내비게이션 함수
-const navigate = (path) => {
-  window.history.pushState({}, "", BASE_PATH + path);
+export const navigate = (path) => {
+  window.history.pushState({}, "", path);
   router();
 };
 
-const getCurrentPath = () => {
-  // 현재 경로 가져오기 (BASE_PATH 고려)
+export const getCurrentPath = () => {
+  // 현재 경로 가져오기
   let path = window.location.pathname;
-
-  // BASE_PATH 제거
-  if (path.startsWith(BASE_PATH)) {
-    path = path.substring(BASE_PATH.length);
-  }
 
   // 경로가 비어있으면 루트로 설정
   if (path === "" || path === "/") {
@@ -56,5 +47,3 @@ export const router = () => {
   // Bind events after rendering
   bindEvents();
 };
-
-export { navigate, getCurrentPath, handleLogout, routes };

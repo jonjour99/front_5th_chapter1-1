@@ -3,6 +3,9 @@ import { auth } from "../utils/auth.js";
 export const Navigation = (currentPath = "/") => {
   const isLoggedIn = auth.isAuthenticated();
 
+  // 현재 URL이 해시 라우터를 사용하는지 확인
+  // const isHashRouter = window.location.href.includes("index.hash.html");
+
   return `
   <nav class="bg-white shadow-md p-2 sticky top-14">
     <ul class="flex justify-around">

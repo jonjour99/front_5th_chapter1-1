@@ -1,25 +1,20 @@
 import { formHandlers } from "../handler/formHandlers.js";
 
 export const bindEvents = () => {
-  const handlers = {
-    "login-form": formHandlers.login,
-    "profile-form": formHandlers.profile,
-    logout: formHandlers.logout,
-  };
+  // 폼 이벤트 처리
+  const loginForm = document.getElementById("login-form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", formHandlers.login);
+  }
 
-  Object.entries(handlers).forEach(([id, handler]) => {
-    const element = document.getElementById(id);
-    if (!element) return;
+  const profileForm = document.getElementById("profile-form");
+  if (profileForm) {
+    profileForm.addEventListener("submit", formHandlers.profile);
+  }
 
-    // 기존 이벤트 리스너 제거 (중복 방지)
-    const eventType = element instanceof HTMLFormElement ? "submit" : "click";
-    const oldHandler = element[`${eventType}Handler`];
-    if (oldHandler) {
-      element.removeEventListener(eventType, oldHandler);
-    }
-
-    // 새 이벤트 리스너 등록 및 참조 저장
-    element.addEventListener(eventType, handler);
-    element[`${eventType}Handler`] = handler;
-  });
+  // 로그아웃 버튼 이벤트 처리
+  const logoutButton = document.getElementById("logout");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", formHandlers.logout);
+  }
 };

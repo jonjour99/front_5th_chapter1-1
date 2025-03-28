@@ -3,10 +3,11 @@ export const USER_STORAGE_KEY = "user";
 export const auth = {
   getUser: () => {
     try {
-      return JSON.parse(localStorage.getItem(USER_STORAGE_KEY) || "{}");
+      const userData = localStorage.getItem(USER_STORAGE_KEY);
+      return userData ? JSON.parse(userData) : null;
     } catch (error) {
       console.error("Error parsing user data:", error);
-      return {};
+      return null;
     }
   },
 

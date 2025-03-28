@@ -5,7 +5,6 @@ import { bindEvents } from "../utils/eventBinding.js";
 // 내비게이션 함수
 export const navigate = (path) => {
   window.location.hash = path;
-  hashRouter();
 };
 
 export const getCurrentPath = () => {
