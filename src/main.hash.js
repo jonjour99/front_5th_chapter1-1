@@ -1,27 +1,35 @@
-import { hashRouter, navigate } from "./router/hashRouter.js";
+import { HomePage, LoginPage, ProfilePage } from "./pages";
+import { globalStore } from "./stores";
+import { ForbiddenError, UnauthorizedError } from "./errors";
+import { router } from "./router";
+import { render } from "./render";
+import { createHashRouter } from "./lib/createHashRouter.js";
 
-// 링크 클릭 이벤트 처리 - 이벤트 위임 적용
-document.addEventListener("click", (e) => {
-  // 이벤트 위임을 위해 closest 메서드 사용
-  const link = e.target.closest("a");
-  if (link && !e.defaultPrevented) {
-    const href = link.getAttribute("href");
-    if (href && href !== "#") {
-      e.preventDefault();
-      navigate(href);
-    }
-  }
-});
+router.set(
+  createHashRouter({
+    "/": HomePage,
+    "/login": () => {
+      const { loggedIn } = globalStore.getState();
+      if (loggedIn) {
+        throw new ForbiddenError();
+      }
+      return LoginPage();
+    },
+    "/profile": () => {
+      const { loggedIn } = globalStore.getState();
+      if (!loggedIn) {
+        throw new UnauthorizedError();
+      }
+      return ProfilePage();
+    },
+  }),
+);
 
-// 브라우저 해시 변경 처리
-window.addEventListener("hashchange", hashRouter);
+function main() {
+  router.get().subscribe(render);
+  globalStore.subscribe(render);
 
-// 초기 라우팅 처리
-window.addEventListener("DOMContentLoaded", () => {
-  // 초기 해시가 없으면 기본 경로로 설정
-  if (!window.location.hash) {
-    navigate("/");
-  } else {
-    hashRouter();
-  }
-});
+  render();
+}
+
+main();

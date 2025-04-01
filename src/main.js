@@ -1,22 +1,33 @@
-import { router, navigate } from "./router/router.js";
+import { createRouter } from "./lib";
+import { HomePage, LoginPage, ProfilePage } from "./pages";
+import { globalStore } from "./stores";
+import { ForbiddenError, UnauthorizedError } from "./errors";
+import { router } from "./router";
+import { render } from "./render";
 
-// 링크 클릭 이벤트 처리 - 이벤트 위임 적용
-document.addEventListener("click", (e) => {
-  // 이벤트 위임을 위해 closest 메서드 사용
-  const link = e.target.closest("a");
-  if (link && !e.defaultPrevented) {
-    const href = link.getAttribute("href");
-    if (href && href !== "#") {
-      e.preventDefault();
-      navigate(href);
+const AuthGuard = (validation, CustomError, Component) => {
+  return () => {
+    const { loggedIn } = globalStore.getState();
+    if (validation(loggedIn)) {
+      throw new CustomError();
     }
-  }
-});
+    return Component();
+  };
+};
 
-// 브라우저 뒤로가기/앞으로가기 처리
-window.addEventListener("popstate", router);
+router.set(
+  createRouter({
+    "/": HomePage,
+    "/login": AuthGuard(Boolean, ForbiddenError, LoginPage),
+    "/profile": AuthGuard((value) => !value, UnauthorizedError, ProfilePage),
+  }),
+);
 
-// 초기 라우팅 처리
-window.addEventListener("DOMContentLoaded", () => {
-  router();
-});
+function main() {
+  router.get().subscribe(render);
+  globalStore.subscribe(render);
+
+  render();
+}
+
+main();
